@@ -1,0 +1,14 @@
+<header>
+	<nav>
+		<h1>
+			<a href="/">Caption Search</a>
+		</h1>
+		<form action="/search" method="get">
+			<label>
+				Search the database:
+				<input  {{ {"type": "text", "name": "q", "id": "q", "value": query, "placeholder": "mario"} | xmlattr }}>
+			</label>
+			<button type="submit">Submit</button>
+		</form>
+	</nav>
+</header>

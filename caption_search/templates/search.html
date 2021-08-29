@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Results for {{query | repr}}{% endblock %}
+
+{% block main %}
+<h1>Results for {{query | repr}}</h1>
+
+{% for video_id, result in results.items() %}
+<section class="video">
+	{% set href = "https://youtu.be/" + video_id %}
+	<a {{ {"href": href} | xmlattr }}>
+		<h2>
+			{{result.title}}
+		</h2>
+		{% set img_src = "https://i.ytimg.com/vi/" + video_id + "/mqdefault.jpg" %}
+		{% set img_alt = "Video thumbnail for " + result.title %}
+		<img {{ {"src": img_src, "alt": img_alt} | xmlattr }}>
+	</a>
+	{% for item in result["items"] %}
+	<article class="result">
+		<blockquote {{ {"cite": href} | xmlattr }}>{{item.text | safe}}</blockquote>
+		{% set start_time = item.start | int | string %}
+		{% set href_timestamp = href + "?t=" + start_time %}
+		<a {{ {"href": href_timestamp} | xmlattr }}>at {{item.start}} seconds</a>
+	</article>
+	{% endfor %}
+</section>
+{% endfor %}
+
+{% endblock %}
